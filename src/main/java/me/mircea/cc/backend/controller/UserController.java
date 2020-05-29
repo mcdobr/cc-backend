@@ -17,6 +17,11 @@ import java.time.Duration;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping(value = "/hello")
+    public String hello() {
+        return "Hello there!";
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<User> findAll() {
         return userService.findAll().delayElements(Duration.ofSeconds(5));

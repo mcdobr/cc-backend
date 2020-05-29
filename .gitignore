@@ -31,4 +31,3 @@ build/
 .vscode/
 
 ### Custom ###
-build_image_run.sh
