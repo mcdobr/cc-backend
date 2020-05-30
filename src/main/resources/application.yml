@@ -1,4 +1,11 @@
 spring:
   data:
     mongodb:
-      uri: ${MONGO_CLUSTER_URI}
+      uri: ${CC_DATABASE_URL}
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: asd
+          client-id: ${CC_OAUTH2_CLIENT_ID}
+          client-secret: ${CC_OUATH2_CLIENT_SECRET}
