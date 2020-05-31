@@ -1,5 +1,6 @@
 package me.mircea.cc.backend.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,15 @@ import java.util.Collections;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity(proxyTargetClass = true)
 public class SecurityConfiguration {
+    @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri}")
+    private String introspectionUri;
+
+    @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id}")
+    private String clientId;
+
+    @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}")
+    private String clientSecret;
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
         SecurityWebFilterChain securityWebFilterChain = httpSecurity
@@ -29,7 +39,9 @@ public class SecurityConfiguration {
                 .cors().and()
                 .authorizeExchange().anyExchange().authenticated()
                 .and()
-                .oauth2ResourceServer(ServerHttpSecurity.OAuth2ResourceServerSpec::opaqueToken)
+                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.opaqueToken(
+                        opaqueTokenSpec -> opaqueTokenSpec.introspector(new GoogleHackIntrospector(introspectionUri, clientId, clientSecret))
+                ))
                 .build();
         return securityWebFilterChain;
     }
