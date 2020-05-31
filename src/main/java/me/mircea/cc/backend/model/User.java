@@ -1,5 +1,8 @@
 package me.mircea.cc.backend.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
@@ -22,11 +27,7 @@ public class User {
     @ToString.Include
     private String id;
 
-    @NotBlank(message = "User's last name should not be blank")
-    private String lastName;
-
-    @NotBlank(message = "User's first name should not be blank")
-    private String firstName;
+    private String name;
 
     @NotBlank(message = "User's email address should not be blank")
     @Indexed(unique = true)
