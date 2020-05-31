@@ -5,6 +5,8 @@ import me.mircea.cc.backend.model.User;
 import me.mircea.cc.backend.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,8 +16,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotBlank;
+import java.security.Principal;
 import java.time.Duration;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,8 +26,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(value = "/hello", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> hello() {
-        return ResponseEntity.ok(Map.of("message", "Hello there!"));
+    public ResponseEntity<Object> hello(@AuthenticationPrincipal Principal principal) {
+        return ResponseEntity.ok(principal);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
@@ -34,7 +36,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{user-id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<User> merge(@PathVariable("user-id") @NotBlank String id) {
-        return Mono.empty();
+    public Mono<User> merge(@PathVariable("user-id") @NotBlank String id, @AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal) {
+        return userService.merge(principal);
     }
 }
