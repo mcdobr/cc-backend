@@ -9,6 +9,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+
 @Document
 @Getter
 @Setter
@@ -20,10 +22,13 @@ public class User {
     @ToString.Include
     private String id;
 
+    @NotBlank(message = "User's last name should not be blank")
     private String lastName;
 
+    @NotBlank(message = "User's first name should not be blank")
     private String firstName;
 
+    @NotBlank(message = "User's email address should not be blank")
     @Indexed(unique = true)
     @ToString.Include
     @EqualsAndHashCode.Include

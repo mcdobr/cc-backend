@@ -6,6 +6,11 @@ spring:
     oauth2:
       resourceserver:
         opaquetoken:
-          introspection-uri: asd
+          introspection-uri: https://www.googleapis.com/oauth2/v3/tokeninfo
           client-id: ${CC_OAUTH2_CLIENT_ID}
-          client-secret: ${CC_OUATH2_CLIENT_SECRET}
+          client-secret: ${CC_OAUTH2_CLIENT_SECRET}
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
