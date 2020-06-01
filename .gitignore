@@ -36,3 +36,4 @@ build/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+eb_local_run.sh

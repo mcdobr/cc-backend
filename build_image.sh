@@ -8,5 +8,4 @@ version=$(mvn --quiet help:evaluate -Dexpression=project.version -DforceStdout)
 
 echo 'Building docker image...'
 docker build --tag cc-backend:${version} \
-  --tag cc-backend \
-  --build-arg JAR_FILE=backend-${version}.jar .
+  --tag cc-backend .

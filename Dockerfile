@@ -3,9 +3,7 @@ MAINTAINER Mircea Dobreanu
 
 # Create folder and copy
 RUN mkdir -p /opt/backend
-ARG JAR_FILE
-COPY ./target/${JAR_FILE} /opt/backend/
-ENV JAR_PATH="/opt/backend/${JAR_FILE}"
+COPY ./target/backend-*.jar /opt/backend/
 
-CMD java -jar $JAR_PATH
+CMD java -jar /opt/backend/backend-*.jar
 EXPOSE 8080
