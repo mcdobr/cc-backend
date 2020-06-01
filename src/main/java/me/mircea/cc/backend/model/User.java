@@ -8,11 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 
 @Document
 @Getter
@@ -34,4 +37,10 @@ public class User {
     @ToString.Include
     @EqualsAndHashCode.Include
     private String email;
+
+    @CreatedDate
+    private Instant createdTimestamp;
+
+    @LastModifiedDate
+    private Instant lastModifiedTimestamp;
 }

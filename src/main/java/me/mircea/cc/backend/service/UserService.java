@@ -18,7 +18,8 @@ public class UserService {
     }
 
     public Mono<User> merge(DefaultOAuth2AuthenticatedPrincipal principal) {
-        return userRepository.findByEmail("abcd@gmail.com")
+        String email = principal.getAttribute("email");
+        return userRepository.findByEmail(email)
                 .defaultIfEmpty(createNewUser(principal))
                 .flatMap(userRepository::save);
     }
