@@ -14,7 +14,7 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.time.Duration;
-import java.util.Collections;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -28,6 +28,9 @@ public class SecurityConfiguration {
 
     @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}")
     private String clientSecret;
+
+    @Value("${cors.allowed.origins}")
+    private String allowedOrigins;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
@@ -60,7 +63,7 @@ public class SecurityConfiguration {
         corsConfig.addAllowedHeader(HttpHeaders.CONTENT_TYPE);
 
         corsConfig.setMaxAge(Duration.ofMinutes(5));
-        corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        corsConfig.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
         corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
