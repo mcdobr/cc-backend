@@ -5,10 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Document
 @Getter
@@ -22,4 +25,14 @@ public class Expense {
     private String id;
 
     private BigDecimal sum;
+
+    private ExpenseCategory expenseCategory;
+
+    private String email;
+
+    @CreatedDate
+    private Instant createdTimestamp;
+
+    @LastModifiedDate
+    private Instant lastModifiedTimestamp;
 }
