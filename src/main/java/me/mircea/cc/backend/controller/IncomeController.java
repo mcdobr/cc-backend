@@ -38,7 +38,7 @@ public class IncomeController {
     @PostMapping
     public Mono<Income> create(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
                                @RequestBody Income income) {
-        return incomeService.create(income);
+        return incomeService.create(principal, income);
     }
 
     @PutMapping("/{income-id}")

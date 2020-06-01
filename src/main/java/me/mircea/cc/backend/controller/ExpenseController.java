@@ -38,7 +38,7 @@ public class ExpenseController {
     @PostMapping
     public Mono<Expense> create(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
                                 @RequestBody Expense expense) {
-        return expenseService.create(expense);
+        return expenseService.create(principal, expense);
     }
 
     @PutMapping("/{expense-id}")

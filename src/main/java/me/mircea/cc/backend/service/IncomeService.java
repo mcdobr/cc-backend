@@ -33,7 +33,8 @@ public class IncomeService {
                 });
     }
 
-    public Mono<Income> create(Income income) {
+    public Mono<Income> create(DefaultOAuth2AuthenticatedPrincipal principal, Income income) {
+        income.setEmail(principal.getAttribute("email"));
         return incomeRepository.save(income);
     }
 

@@ -33,7 +33,8 @@ public class ExpenseService {
                 });
     }
 
-    public Mono<Expense> create(Expense expense) {
+    public Mono<Expense> create(DefaultOAuth2AuthenticatedPrincipal principal, Expense expense) {
+        expense.setEmail(principal.getAttribute("email"));
         return expenseRepository.save(expense);
     }
 
