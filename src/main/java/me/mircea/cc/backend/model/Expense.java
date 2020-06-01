@@ -26,7 +26,7 @@ public class Expense {
 
     private BigDecimal sum;
 
-    private ExpenseCategory expenseCategory;
+    private ExpenseCategory category;
 
     private String email;
 

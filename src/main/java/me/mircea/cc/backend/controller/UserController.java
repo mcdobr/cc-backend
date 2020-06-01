@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import me.mircea.cc.backend.model.User;
 import me.mircea.cc.backend.service.UserService;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotBlank;
-import java.security.Principal;
 import java.time.Duration;
 
 @RestController
@@ -24,11 +22,6 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @GetMapping(value = "/hello", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> hello(@AuthenticationPrincipal Principal principal) {
-        return ResponseEntity.ok(principal);
-    }
 
     @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<User> findAll() {
