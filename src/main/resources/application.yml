@@ -3,6 +3,8 @@ cors:
     origins: ${CORS_ALLOWED_ORIGINS}
 database:
   uri: ${DATABASE_URI}
+  username: ${DATABASE_USER}
+  password: ${DATABASE_PASSWORD}
 identity_provider:
   uri: ${IDENTITY_PROVIDER_URI}
 server:
