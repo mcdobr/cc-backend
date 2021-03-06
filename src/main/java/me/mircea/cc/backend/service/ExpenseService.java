@@ -21,7 +21,7 @@ public class ExpenseService {
         return expenseRepository.findAllByEmail(principal.getAttribute("email"));
     }
 
-    public Mono<Expense> findById(DefaultOAuth2AuthenticatedPrincipal principal, String expenseId) {
+    public Mono<Expense> findById(DefaultOAuth2AuthenticatedPrincipal principal, Long expenseId) {
         return expenseRepository.findById(expenseId)
                 .switchIfEmpty(Mono.error(new NoSuchElementException()))
                 .flatMap(expense -> {
@@ -38,13 +38,13 @@ public class ExpenseService {
         return expenseRepository.save(expense);
     }
 
-    public Mono<Expense> update(String expenseId, Expense expense) {
+    public Mono<Expense> update(Long expenseId, Expense expense) {
         return expenseRepository.findById(expenseId)
                 .switchIfEmpty(Mono.error(new NoSuchElementException()))
                 .flatMap(exp -> expenseRepository.save(expense));
     }
 
-    public Mono<Void> delete(String expenseId) {
+    public Mono<Void> delete(Long expenseId) {
         return expenseRepository.findById(expenseId)
                 .switchIfEmpty(Mono.error(new NoSuchElementException()))
                 .flatMap(expenseRepository::delete);

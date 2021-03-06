@@ -20,15 +20,6 @@ import java.util.Arrays;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity(proxyTargetClass = true)
 public class SecurityConfiguration {
-    @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri}")
-    private String introspectionUri;
-
-    @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id}")
-    private String clientId;
-
-    @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}")
-    private String clientSecret;
-
     @Value("${cors.allowed.origins}")
     private String allowedOrigins;
 
@@ -40,11 +31,11 @@ public class SecurityConfiguration {
                 .logout().disable()
                 .csrf().disable()
                 .cors().and()
-                .authorizeExchange().anyExchange().authenticated()
-                .and()
-                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.opaqueToken(
-                        opaqueTokenSpec -> opaqueTokenSpec.introspector(new GoogleHackIntrospector(introspectionUri, clientId, clientSecret))
-                ))
+//                .authorizeExchange().anyExchange().authenticated()
+//                .and()
+//                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.opaqueToken(
+//                        opaqueTokenSpec -> opaqueTokenSpec.introspector(new GoogleHackIntrospector(introspectionUri, clientId, clientSecret))
+//                ))
                 .build();
         return securityWebFilterChain;
     }
