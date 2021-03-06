@@ -21,7 +21,7 @@ public class IncomeService {
         return incomeRepository.findAllByEmail(principal.getAttribute("email"));
     }
 
-    public Mono<Income> findById(DefaultOAuth2AuthenticatedPrincipal principal, String incomeId) {
+    public Mono<Income> findById(DefaultOAuth2AuthenticatedPrincipal principal, Long incomeId) {
         return incomeRepository.findById(incomeId)
                 .switchIfEmpty(Mono.error(new NoSuchElementException()))
                 .flatMap(income -> {
@@ -38,13 +38,13 @@ public class IncomeService {
         return incomeRepository.save(income);
     }
 
-    public Mono<Income> update(String incomeId, Income income) {
+    public Mono<Income> update(Long incomeId, Income income) {
         return incomeRepository.findById(incomeId)
                 .switchIfEmpty(Mono.error(new NoSuchElementException()))
                 .flatMap(inc -> incomeRepository.save(income));
     }
 
-    public Mono<Void> delete(String incomeId) {
+    public Mono<Void> delete(Long incomeId) {
         return incomeRepository.findById(incomeId)
                 .switchIfEmpty(Mono.error(new NoSuchElementException()))
                 .flatMap(incomeRepository::delete);

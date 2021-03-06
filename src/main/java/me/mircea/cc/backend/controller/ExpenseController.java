@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/api/expenses")
@@ -31,7 +32,7 @@ public class ExpenseController {
 
     @GetMapping("/{expense-id}")
     public Mono<Expense> findById(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
-                                  @PathVariable("expense-id") @NotBlank String expenseId) {
+                                  @PathVariable("expense-id") @NotNull @Positive Long expenseId) {
         return expenseService.findById(principal, expenseId);
     }
 
@@ -43,14 +44,14 @@ public class ExpenseController {
 
     @PutMapping("/{expense-id}")
     public Mono<Expense> update(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
-                                @PathVariable("expense-id") String expenseId,
+                                @PathVariable("expense-id") Long expenseId,
                                 @RequestBody Expense expense) {
         return expenseService.update(expenseId, expense);
     }
 
     @DeleteMapping("/{expense-id}")
     public Mono<Void> delete(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
-                             @PathVariable("expense-id") String expenseId) {
+                             @PathVariable("expense-id") Long expenseId) {
         return expenseService.delete(expenseId);
     }
 }

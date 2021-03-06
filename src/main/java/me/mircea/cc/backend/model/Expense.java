@@ -20,7 +20,7 @@ import java.time.Instant;
 public class Expense {
     @Id
     @ToString.Include
-    private String id;
+    private Long id;
 
     private BigDecimal sum;
 

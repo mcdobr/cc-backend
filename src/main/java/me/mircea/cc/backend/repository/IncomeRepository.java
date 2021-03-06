@@ -4,6 +4,6 @@ import me.mircea.cc.backend.model.Income;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 
-public interface IncomeRepository extends ReactiveCrudRepository<Income, String> {
+public interface IncomeRepository extends ReactiveCrudRepository<Income, Long> {
     Flux<Income> findAllByEmail(String email);
 }
