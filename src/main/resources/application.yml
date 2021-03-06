@@ -1,6 +1,8 @@
 cors:
   allowed:
     origins: ${CC_CORS_ALLOWED_ORIGINS}
+server:
+    port: 8081
 spring:
   data:
     mongodb:
