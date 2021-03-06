@@ -11,13 +11,10 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
-@Document
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,7 +30,6 @@ public class User {
     private String name;
 
     @NotBlank(message = "User's email address should not be blank")
-    @Indexed(unique = true)
     @ToString.Include
     @EqualsAndHashCode.Include
     private String email;
