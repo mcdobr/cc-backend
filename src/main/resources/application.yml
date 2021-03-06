@@ -1,19 +1,20 @@
 cors:
   allowed:
-    origins: ${CC_CORS_ALLOWED_ORIGINS}
+    origins: ${CORS_ALLOWED_ORIGINS}
+database:
+  uri: ${DATABASE_URI}
+identity_provider:
+  uri: ${IDENTITY_PROVIDER_URI}
 server:
     port: 8081
 spring:
-  data:
-    mongodb:
-      uri: ${CC_DATABASE_URL}
-  security:
-    oauth2:
-      resourceserver:
-        opaquetoken:
-          introspection-uri: https://www.googleapis.com/oauth2/v1/tokeninfo
-          client-id: ${CC_OAUTH2_CLIENT_ID}
-          client-secret: ${CC_OAUTH2_CLIENT_SECRET}
+#  security:
+#    oauth2:
+#      resourceserver:
+#        opaquetoken:
+#          introspection-uri: https://www.googleapis.com/oauth2/v1/tokeninfo
+      #    client-id: ${CC_OAUTH2_CLIENT_ID}
+      #    client-secret: ${CC_OAUTH2_CLIENT_SECRET}
   jackson:
     default-property-inclusion: non_null
     serialization:
