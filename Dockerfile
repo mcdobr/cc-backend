@@ -12,4 +12,5 @@ COPY --from=build /home/app/target/backend-*.jar /opt/backend/
 CMD java -jar /opt/backend/backend-*.jar
 EXPOSE 8081
 
+# Might have cache issue in layers
 MAINTAINER Mircea Dobreanu
