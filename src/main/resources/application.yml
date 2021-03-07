@@ -21,7 +21,7 @@ spring:
       write-dates-as-timestamps: false
 logging:
   level:
-    reactor:
+    root: DEBUG
     org:
       springframework:
         security: DEBUG
