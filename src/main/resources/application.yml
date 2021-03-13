@@ -10,20 +10,20 @@ identity_provider:
 server:
     port: 8081
 spring:
-#  security:
-#    oauth2:
-#      resourceserver:
-#        opaquetoken:
-#          introspection-uri: https://www.googleapis.com/oauth2/v1/tokeninfo
-      #    client-id: ${CC_OAUTH2_CLIENT_ID}
-      #    client-secret: ${CC_OAUTH2_CLIENT_SECRET}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${IDENTITY_PROVIDER_URI}/auth/realms/demo
   jackson:
     default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
 logging:
   level:
+    root: DEBUG
     org:
       springframework:
         security: DEBUG
         r2dbc: DEBUG
+debug: true
