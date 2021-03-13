@@ -8,29 +8,40 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.relational.core.mapping.Table;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Income {
+@Table("transaction")
+public class Transaction {
     @Id
     @ToString.Include
-    private Long id;
+    private UUID id;
 
+    @NotNull
     private BigDecimal sum;
 
-    private String description;
+    @NotNull
+    private UUID sender;
 
-    private String email;
+    @NotNull
+    private UUID receiver;
 
+    @NotNull
     @CreatedDate
     private Instant createdTimestamp;
 
+    @NotNull
     @LastModifiedDate
     private Instant lastModifiedTimestamp;
+
+    private String description;
 }
