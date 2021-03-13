@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotBlank;
 import java.time.Duration;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,13 +24,14 @@ import java.time.Duration;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<User> findAll() {
         return userService.findAll().delayElements(Duration.ofSeconds(5));
     }
 
     @PutMapping(value = "/{user-id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<User> merge(@PathVariable("user-id") @NotBlank String id, @AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal) {
+    public Mono<User> merge(@PathVariable("user-id") @NotBlank UUID id,
+                            @AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal) {
         return userService.merge(principal);
     }
 }
