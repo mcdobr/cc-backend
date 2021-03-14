@@ -1,4 +1,4 @@
-create table transaction
+create table user_transaction
 (
     id uuid default gen_random_uuid() not null
         constraint transaction_pk
