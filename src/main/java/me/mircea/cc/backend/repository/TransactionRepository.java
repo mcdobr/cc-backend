@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface TransactionRepository extends ReactiveCrudRepository<Transaction, UUID> {
     @Query("select * " +
-            "from transaction t " +
+            "from user_transaction t " +
             "where t.sender = :userId " +
             "   or t.receiver = :userId " +
             "order by t.created_at desc ")

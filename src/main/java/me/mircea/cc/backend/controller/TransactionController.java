@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.mircea.cc.backend.model.Transaction;
 import me.mircea.cc.backend.service.TransactionService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,34 +24,34 @@ import java.util.UUID;
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
 public class TransactionController {
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
     @GetMapping
-    public Flux<Transaction> findAll(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal) {
+    public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
         return transactionService.findAll(principal);
     }
 
     @GetMapping("/{transaction-id}")
-    public Mono<Transaction> findById(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
+    public Mono<Transaction> findById(@AuthenticationPrincipal JwtAuthenticationToken principal,
                                       @PathVariable("transaction-id") @NotNull @Positive UUID transactionId) {
         return transactionService.findById(principal, transactionId);
     }
 
     @PostMapping
-    public Mono<Transaction> create(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
+    public Mono<Transaction> create(@AuthenticationPrincipal JwtAuthenticationToken principal,
                                     @RequestBody Transaction transaction) {
         return transactionService.create(principal, transaction);
     }
 
     @PutMapping("/{transaction-id}")
-    public Mono<Transaction> update(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
+    public Mono<Transaction> update(@AuthenticationPrincipal JwtAuthenticationToken principal,
                                     @PathVariable("transaction-id") UUID transactionId,
                                     @RequestBody Transaction transaction) {
         return transactionService.update(transactionId, transaction);
     }
 
     @DeleteMapping("/{transaction-id}")
-    public Mono<Void> delete(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal,
+    public Mono<Void> delete(@AuthenticationPrincipal JwtAuthenticationToken principal,
                              @PathVariable("transaction-id") UUID transactionId) {
         return transactionService.delete(transactionId);
     }

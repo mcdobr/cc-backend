@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -12,11 +13,13 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 import java.time.Duration;
 import java.util.Arrays;
 
 @Configuration
+@EnableWebFlux
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity(proxyTargetClass = true)
 public class SecurityConfiguration {
@@ -31,11 +34,10 @@ public class SecurityConfiguration {
                 .logout().disable()
                 .csrf().disable()
                 .cors().and()
-//                .authorizeExchange().anyExchange().authenticated()
-//                .and()
-//                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.opaqueToken(
-//                        opaqueTokenSpec -> opaqueTokenSpec.introspector(new GoogleHackIntrospector(introspectionUri, clientId, clientSecret))
-//                ))
+                .authorizeExchange()
+                .anyExchange().authenticated()
+                .and()
+                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(Customizer.withDefaults()))
                 .build();
         return securityWebFilterChain;
     }
