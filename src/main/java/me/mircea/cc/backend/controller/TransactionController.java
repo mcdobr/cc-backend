@@ -17,7 +17,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import java.time.Duration;
 import java.util.UUID;
 
 @RestController
@@ -26,14 +26,15 @@ import java.util.UUID;
 public class TransactionController {
     private final TransactionService transactionService;
 
+// todo: why doesn't it return nd-json? also r2dbc connection pool should be added.
     @GetMapping
     public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
-        return transactionService.findAll(principal);
+        return transactionService.findAll(principal).delayElements(Duration.ofSeconds(1));
     }
 
     @GetMapping("/{transaction-id}")
     public Mono<Transaction> findById(@AuthenticationPrincipal JwtAuthenticationToken principal,
-                                      @PathVariable("transaction-id") @NotNull @Positive UUID transactionId) {
+                                      @PathVariable("transaction-id") @NotNull UUID transactionId) {
         return transactionService.findById(principal, transactionId);
     }
 

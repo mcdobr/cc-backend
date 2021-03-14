@@ -28,7 +28,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
-        SecurityWebFilterChain securityWebFilterChain = httpSecurity
+        return httpSecurity
                 .httpBasic().disable()
                 .formLogin().disable()
                 .logout().disable()
@@ -39,7 +39,6 @@ public class SecurityConfiguration {
                 .and()
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(Customizer.withDefaults()))
                 .build();
-        return securityWebFilterChain;
     }
 
     @Bean
