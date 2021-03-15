@@ -19,7 +19,6 @@ import java.time.Duration;
 import java.util.Arrays;
 
 @Configuration
-@EnableWebFlux
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity(proxyTargetClass = true)
 public class SecurityConfiguration {
