@@ -3,6 +3,7 @@ package me.mircea.cc.backend.controller;
 import lombok.RequiredArgsConstructor;
 import me.mircea.cc.backend.model.Transaction;
 import me.mircea.cc.backend.service.TransactionService;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +27,7 @@ import java.util.UUID;
 public class TransactionController {
     private final TransactionService transactionService;
 
-// todo: why doesn't it return nd-json? also r2dbc connection pool should be added.
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
         return transactionService.findAll(principal).delayElements(Duration.ofSeconds(1));
     }
