@@ -8,10 +8,8 @@ import reactor.core.publisher.Flux;
 import java.util.UUID;
 
 public interface TransactionRepository extends ReactiveCrudRepository<Transaction, UUID> {
-    @Query("select * " +
-            "from user_transaction t " +
-            "where t.sender = :userId " +
-            "   or t.receiver = :userId " +
+    @Query("select t.* " +
+            "from transaction_history t " +
             "order by t.created_at desc ")
-    Flux<Transaction> findAllForUser(UUID userId);
+    Flux<Transaction> findAll();
 }

@@ -27,9 +27,13 @@ import java.util.UUID;
 public class TransactionController {
     private final TransactionService transactionService;
 
-    @GetMapping(produces = MediaType.APPLICATION_NDJSON_VALUE)
+    @GetMapping(produces = {
+            MediaType.APPLICATION_NDJSON_VALUE,
+            MediaType.APPLICATION_JSON_VALUE
+//            MediaType.TEXT_EVENT_STREAM_VALUE
+    })
     public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
-        return transactionService.findAll(principal).delayElements(Duration.ofSeconds(1));
+        return transactionService.findAll(principal);
     }
 
     @GetMapping("/{transaction-id}")

@@ -17,7 +17,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
     public Flux<Transaction> findAll(JwtAuthenticationToken principal) {
-        return transactionRepository.findAllForUser(UUID.fromString(principal.getName()));
+        return transactionRepository.findAll();
     }
 
     public Mono<Transaction> findById(JwtAuthenticationToken principal, UUID transactionId) {
