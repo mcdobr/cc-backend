@@ -18,7 +18,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
-import java.time.Duration;
 import java.util.UUID;
 
 @RestController
@@ -29,8 +28,8 @@ public class TransactionController {
 
     @GetMapping(produces = {
             MediaType.APPLICATION_NDJSON_VALUE,
-            MediaType.APPLICATION_JSON_VALUE
-//            MediaType.TEXT_EVENT_STREAM_VALUE
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.TEXT_EVENT_STREAM_VALUE
     })
     public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
         return transactionService.findAll(principal);

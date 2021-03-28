@@ -52,6 +52,7 @@ public class SecurityConfiguration {
 
         corsConfig.addAllowedHeader(HttpHeaders.AUTHORIZATION);
         corsConfig.addAllowedHeader(HttpHeaders.CONTENT_TYPE);
+        corsConfig.addAllowedHeader(HttpHeaders.CACHE_CONTROL);
 
         corsConfig.setMaxAge(Duration.ofMinutes(5));
         corsConfig.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
