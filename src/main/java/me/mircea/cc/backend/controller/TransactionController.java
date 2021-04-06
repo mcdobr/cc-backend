@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.mircea.cc.backend.model.Transaction;
 import me.mircea.cc.backend.service.TransactionService;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +32,7 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.TEXT_EVENT_STREAM_VALUE
     })
+    @PreAuthorize("hasAuthority('SCOPE_view_transactions')")
     public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
         return transactionService.findAll(principal);
     }

@@ -36,16 +36,17 @@ public class DatabaseConfiguration extends AbstractR2dbcConfiguration {
         return ConnectionFactories.get(options);
     }
 
-    @Bean
-    public ConnectionFactoryInitializer initializer(
-            @Qualifier("connectionFactory") ConnectionFactory connectionFactory
-    ) {
-        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
-        initializer.setConnectionFactory(connectionFactory);
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(
-                new ClassPathResource("schema.sql"), new ClassPathResource("data.sql")
-        );
-        initializer.setDatabasePopulator(resourceDatabasePopulator);
-        return initializer;
-    }
+    // todo: this creates a race condition; doesn't always start (doesn't find a connection)
+//    @Bean
+//    public ConnectionFactoryInitializer initializer(
+//            @Qualifier("connectionFactory") ConnectionFactory connectionFactory
+//    ) {
+//        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
+//        initializer.setConnectionFactory(connectionFactory);
+//        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(
+//                new ClassPathResource("schema.sql"), new ClassPathResource("data.sql")
+//        );
+//        initializer.setDatabasePopulator(resourceDatabasePopulator);
+//        return initializer;
+//    }
 }
