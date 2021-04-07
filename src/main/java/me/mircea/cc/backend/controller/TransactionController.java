@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
 public class TransactionController {
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
     @GetMapping
     public Flux<Transaction> findAll(@AuthenticationPrincipal DefaultOAuth2AuthenticatedPrincipal principal) {
