@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -25,19 +26,17 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
-        SecurityWebFilterChain securityWebFilterChain = httpSecurity
+        return httpSecurity
                 .httpBasic().disable()
                 .formLogin().disable()
                 .logout().disable()
                 .csrf().disable()
                 .cors().and()
-//                .authorizeExchange().anyExchange().authenticated()
-//                .and()
-//                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.opaqueToken(
-//                        opaqueTokenSpec -> opaqueTokenSpec.introspector(new GoogleHackIntrospector(introspectionUri, clientId, clientSecret))
-//                ))
+                .authorizeExchange()
+                .anyExchange().authenticated()
+                .and()
+                .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec.jwt(Customizer.withDefaults()))
                 .build();
-        return securityWebFilterChain;
     }
 
     @Bean
@@ -52,6 +51,7 @@ public class SecurityConfiguration {
 
         corsConfig.addAllowedHeader(HttpHeaders.AUTHORIZATION);
         corsConfig.addAllowedHeader(HttpHeaders.CONTENT_TYPE);
+        corsConfig.addAllowedHeader(HttpHeaders.CACHE_CONTROL);
 
         corsConfig.setMaxAge(Duration.ofMinutes(5));
         corsConfig.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
