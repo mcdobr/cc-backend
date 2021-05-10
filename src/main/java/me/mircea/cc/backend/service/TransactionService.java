@@ -25,7 +25,7 @@ public class TransactionService {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
-        if (authorities.contains("SCOPE_view_sensitive_transactions")) {
+        if (authorities.contains("ROLE_admin")) {
             return transactionRepository.findAll();
         } else {
             return transactionRepository.findAllByTypeIn(Set.of(TransactionType.DEVELOPMENT));
