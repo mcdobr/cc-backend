@@ -21,6 +21,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
+import java.time.Duration;
 import java.util.UUID;
 
 @RestController
@@ -37,7 +38,7 @@ public class TransactionController {
     })
     @PreAuthorize("hasAnyRole('pleb', 'admin')")
     public Flux<Transaction> findAll(@AuthenticationPrincipal JwtAuthenticationToken principal) {
-        return transactionService.findAll(principal);
+        return transactionService.findAll(principal).delayElements(Duration.ofSeconds(1));
     }
 
     @GetMapping("/{transaction-id}")
